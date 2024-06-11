@@ -4,7 +4,7 @@
     "variables": {
         "policySetName": "enforce-naming-for-resources-psd",
         "policySetDisplayName": "Enforce naming convention for common resource types",
-        "policySetDescription": "This policy enforces a naming pattern common resource types.",
+        "policySetDescription": "This policy enforces a naming pattern common resource types."
         //"policyDefinitionForNamingResources": "enforce-naming-for-resource-pd",
         //"policyDefinitionForResourceGroups": "enforce-naming-for-resource-groups-pd"
     },

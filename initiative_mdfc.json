@@ -1,0 +1,159 @@
+{
+    "properties": {
+      "displayName": "MDfcの推奨事項一覧(2024/6/5更新)",
+      "policyType": "Custom",
+      "description": "Defender for cloudの反映が遅く、スコアがすぐに見れないので作成。\nポリシーの場合はオンデマンドで好きな時にスキャンを実行可能なため、最悪これを作成して確認。\n即時反映コマンド(Azure CLI):az policy state trigger-scan",
+      "metadata": {
+        "category": "MDfc",
+        "createdBy": "996854f0-986c-405f-8e8b-7c3e5fb70ea3",
+        "createdOn": "2024-06-05T01:15:42.9289319Z",
+        "updatedBy": "996854f0-986c-405f-8e8b-7c3e5fb70ea3",
+        "updatedOn": "2024-06-05T04:14:38.0853448Z"
+      },
+      "version": "1.0.0",
+      "parameters": {},
+      "policyDefinitions": [
+        {
+          "policyDefinitionReferenceId": "Azure リソースに対する所有者アクセス許可を持つアカウントで MFA を有効にする必要がある_1",
+          "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/e3e008c3-56b9-4133-8fd7-d3347377402a",
+          "definitionVersion": "1.*.*",
+          "parameters": {},
+          "groupNames": []
+        },
+        {
+          "policyDefinitionReferenceId": "仮想マシンで管理ポートを閉じる必要がある_1",
+          "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/22730e10-96f6-4aac-ad84-9383d35b5917",
+          "definitionVersion": "3.*.*",
+          "parameters": {},
+          "groupNames": []
+        },
+        {
+          "policyDefinitionReferenceId": "仮想マシンの管理ポートは、Just-In-Time のネットワーク アクセス制御で保護する必要があります_1",
+          "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/b0f33259-77d7-4c9e-aac6-3aabcfae693c",
+          "definitionVersion": "3.*.*",
+          "parameters": {},
+          "groupNames": []
+        },
+        {
+          "policyDefinitionReferenceId": "脆弱性評価ソリューションを仮想マシンで有効にする必要があります_1",
+          "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/501541f7-f7e7-4cd6-868c-4190fdad3ac9",
+          "definitionVersion": "3.*.*",
+          "parameters": {},
+          "groupNames": []
+        },
+        {
+          "policyDefinitionReferenceId": "不足しているシステム更新プログラムを定期的に確認するようにマシンを構成する必要がある_1",
+          "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/bd876905-5b84-4f73-ab2d-2e7a7c4568d9",
+          "definitionVersion": "3.*.*",
+          "parameters": {},
+          "groupNames": []
+        },
+        {
+          "policyDefinitionReferenceId": "ご使用の仮想マシンに関連付けられたネットワーク セキュリティ グループでは、すべてのネットワーク ポートを制限する必要があります_1",
+          "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/9daedab3-fb2d-461e-b861-71790eead4f6",
+          "definitionVersion": "3.*.*",
+          "parameters": {},
+          "groupNames": []
+        },
+        {
+          "policyDefinitionReferenceId": "アダプティブ ネットワーク強化の推奨事項をインターネット接続仮想マシンに適用する必要がある_1",
+          "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/08e6af2d-db70-460a-bfe9-d5bd474ba9d6",
+          "definitionVersion": "3.*.*",
+          "parameters": {},
+          "groupNames": []
+        },
+        {
+          "policyDefinitionReferenceId": "Azure リソースに対する書き込みアクセス許可を持つアカウントで MFA を有効にする必要がある_1",
+          "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/931e118d-50a1-4457-a5e4-78550e086c52",
+          "definitionVersion": "1.*.*",
+          "parameters": {},
+          "groupNames": []
+        },
+        {
+          "policyDefinitionReferenceId": "マシンではシークレットの検出結果が解決されている必要がある_1",
+          "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/3ac7c827-eea2-4bde-acc7-9568cd320efa",
+          "definitionVersion": "1.*.*",
+          "parameters": {},
+          "groupNames": []
+        },
+        {
+          "policyDefinitionReferenceId": "不足しているシステム更新プログラムを定期的に確認するようにマシンを構成する必要がある_2",
+          "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/bd876905-5b84-4f73-ab2d-2e7a7c4568d9",
+          "definitionVersion": "3.*.*",
+          "parameters": {},
+          "groupNames": []
+        },
+        {
+          "policyDefinitionReferenceId": "インターネットに接続されている仮想マシンをネットワーク セキュリティ グループで保護する必要がある_2",
+          "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/f6de0be7-9a8a-4b8a-b349-43cf02d22f7c",
+          "definitionVersion": "3.*.*",
+          "parameters": {},
+          "groupNames": []
+        },
+        {
+          "policyDefinitionReferenceId": "ご使用の仮想マシンに関連付けられたネットワーク セキュリティ グループでは、すべてのネットワーク ポートを制限する必要があります_2",
+          "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/9daedab3-fb2d-461e-b861-71790eead4f6",
+          "definitionVersion": "3.*.*",
+          "parameters": {},
+          "groupNames": []
+        },
+        {
+          "policyDefinitionReferenceId": "アダプティブ ネットワーク強化の推奨事項をインターネット接続仮想マシンに適用する必要がある_2",
+          "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/08e6af2d-db70-460a-bfe9-d5bd474ba9d6",
+          "definitionVersion": "3.*.*",
+          "parameters": {},
+          "groupNames": []
+        },
+        {
+          "policyDefinitionReferenceId": "仮想マシン上の IP 転送を無効にする必要がある_1",
+          "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/bd352bd5-2853-4985-bf0d-73806b4a5744",
+          "definitionVersion": "3.*.*",
+          "parameters": {},
+          "groupNames": []
+        },
+        {
+          "policyDefinitionReferenceId": "Azure リソースに対する所有者アクセス許可を持つゲスト アカウントを削除する必要がある_1",
+          "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/339353f6-2387-4a45-abe4-7f529d121046",
+          "definitionVersion": "1.*.*",
+          "parameters": {},
+          "groupNames": []
+        },
+        {
+          "policyDefinitionReferenceId": "Azure リソースに対する書き込みアクセス許可を持つゲスト アカウントを削除する必要がある_1",
+          "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/94e1c2ac-cbbe-4cac-a2b5-389c812dee87",
+          "definitionVersion": "1.*.*",
+          "parameters": {},
+          "groupNames": []
+        },
+        {
+          "policyDefinitionReferenceId": "Azure リソースに対する所有者アクセス許可を持つ、ブロックされているアカウントを削除する必要がある_1",
+          "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/0cfea604-3201-4e14-88fc-fae4c427a6c5",
+          "definitionVersion": "1.*.*",
+          "parameters": {},
+          "groupNames": []
+        },
+        {
+          "policyDefinitionReferenceId": "Azure リソースに対する読み取りおよび書き込みアクセス許可を持つ、ブロックされているアカウントは削除する必要がある_1",
+          "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/8d7e1fde-fe26-4b5f-8108-f8e432cbc2be",
+          "definitionVersion": "1.*.*",
+          "parameters": {},
+          "groupNames": []
+        }
+      ],
+      "policyDefinitionGroups": [],
+      "versions": [
+        "1.0.0"
+      ]
+    },
+    "id": "/subscriptions/bf106168-04b4-45de-95cf-852acc4c362b/providers/Microsoft.Authorization/policySetDefinitions/c41f92c0f7d543e483ce159e",
+    "type": "Microsoft.Authorization/policySetDefinitions",
+    "name": "c41f92c0f7d543e483ce159e",
+    "systemData": {
+      "createdBy": "shokada@pc-daiwabo.co.jp",
+      "createdByType": "User",
+      "createdAt": "2024-06-05T01:15:42.8546116Z",
+      "lastModifiedBy": "shokada@pc-daiwabo.co.jp",
+      "lastModifiedByType": "User",
+      "lastModifiedAt": "2024-06-05T04:14:37.9071826Z"
+    }
+  }

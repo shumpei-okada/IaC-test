@@ -1,0 +1,20 @@
+"resources": [
+        {
+            "type": "Microsoft.Authorization/policyAssignments",
+            "name": "[parameters('initiativeAssignmentName')]",
+            "apiVersion": "2019-09-01",
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "location": "West Europe",
+            "properties": {
+                "scope": "[if(empty(parameters('resourceGroupName')), subscription().id, concat(subscription().id, '/resourceGroups/', parameters('resourceGroupName')))]",
+                "enforcementMode": "[parameters('policyAssignmentMode')]",
+                "policyDefinitionId": "[concat(subscription().id, '/providers/Microsoft.Authorization/policySetDefinitions/', parameters('initiativeDefinitionName'))]",
+                "parameters": "[parameters('initiativeParameters')]",
+                "metadata": {
+                    "assignedBy": "[parameters('assignedBy')]"
+                }
+            }
+        }
+    ]

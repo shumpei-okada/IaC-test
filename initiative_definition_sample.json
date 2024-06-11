@@ -1,0 +1,46 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "variables": {
+        "policySetName": "enforce-naming-for-resources-psd",
+        "policySetDisplayName": "Enforce naming convention for common resource types",
+        "policySetDescription": "This policy enforces a naming pattern common resource types.",
+        "policyDefinitionForNamingResources": "enforce-naming-for-resource-pd",
+        "policyDefinitionForResourceGroups": "enforce-naming-for-resource-groups-pd"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "apiVersion": "2019-09-01",
+            "name": "[variables('policySetName')]",
+            "properties": {
+                "displayName": "[variables('policySetDisplayName')]",
+                "description": "[variables('policySetDescription')]",
+                "policyType": "Custom",
+                "metadata": {
+                    "category": "Naming convention"
+                },
+                
+                "policyDefinitions": [
+                    {
+                        "policyDefinitionId": "[concat(subscription().id, '/providers/Microsoft.Authorization/policyDefinitions/', variables('policyDefinitionForResourceGroups'))]",
+                        "policyDefinitionReferenceId": "Resource_Group_Naming"
+
+                    },
+                    {
+                        "policyDefinitionId": "[concat(subscription().id, '/providers/Microsoft.Authorization/policyDefinitions/', variables('policyDefinitionForNamingResources'))]",
+                        "policyDefinitionReferenceId": "Automation_Accounts_Naming",
+                        "parameters": {
+                            "resourceType": {
+                                "value": "Microsoft.Automation/automationAccounts"
+                            },
+                            "resourceAbbreviation": {
+                                "value": "[[parameters('automationAccountAbbreviation')]"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}

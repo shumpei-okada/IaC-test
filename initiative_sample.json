@@ -2,20 +2,20 @@
     "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "variables": {
-        "policySetName": "enforce-resource-tagging-psd",
-        "policySetDisplayName": "Enforce using mandatory tags for resource groups",
-        "policySetDescription": "This policy initiative enforces the usage of mandatory tags for resource groups.",
-        "policyDefinitionForResourceGroupTagging": "enforce-resource-group-tags-pd"
+        "InitiativeName": "イニシアティブのネーム",
+        "InitiativeDisplayName": "イニシアティブのディスプレイネーム",
+        "InitiativeDescription": "イニシアティブの説明",
+        "InitiativeDefinitionForRGTagging": "enforce-resource-group-tags-pd"
 
     },
     "resources": [
         {
             "type": "Microsoft.Authorization/policySetDefinitions",
             "apiVersion": "2019-09-01",
-            "name": "[variables('policySetName')]",
+            "name": "[variables('InitiativeName')]",
             "properties": {
-                "displayName": "[variables('policySetDisplayName')]",
-                "description": "[variables('policySetDescription')]",
+                "displayName": "[variables('InitiativeDisplayName')]",
+                "description": "[variables('InitiativeDescription')]",
                 "policyType": "Custom",
                 "metadata": {
                     "category": "Tags"
@@ -38,7 +38,7 @@
                 },
                 "policyDefinitions": [
                     {
-                        "policyDefinitionId": "[concat(subscription().id, '/providers/Microsoft.Authorization/policyDefinitions/', variables('policyDefinitionForResourceGroupTagging'))]",
+                        "policyDefinitionId": "[concat(subscription().id, '/providers/Microsoft.Authorization/policyDefinitions/', variables('InitiativeDefinitionForRGTagging'))]",
                         "policyDefinitionReferenceId": "Resource_Group_Tags",
                         "parameters": {
                             "allowedEnvironmentTagValues": {

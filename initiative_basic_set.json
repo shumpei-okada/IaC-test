@@ -1,0 +1,66 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "variables": {
+        "policySetName": "policytest",
+        "policySetDisplayName": "policytest",
+        "policySetDescription": "This policy is sample.",
+        //"policyDefinitionForNamingResources": "enforce-naming-for-resource-pd",
+        //"policyDefinitionForResourceGroups": "enforce-naming-for-resource-groups-pd"
+        "VM_SKU_Size":  ["basic_a0","basic_a1","basic_a2"]
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "apiVersion": "2023-04-01",
+            "name": "[variables('policySetName')]",
+            "properties": {
+                "displayName": "[variables('policySetDisplayName')]",
+                "description": "[variables('policySetDescription')]",
+                "policyType": "Custom",
+                "metadata": {
+                    "category": "Naming convention"
+                },
+                
+                "policyDefinitions": [
+                    /*{
+                        "policyDefinitionId": "[concat(subscription().id, '/providers/Microsoft.Authorization/policyDefinitions/', variables('policyDefinitionForResourceGroups'))]",
+                        "policyDefinitionReferenceId": "Resource_Group_Naming"
+
+                    },
+                    {
+                        "policyDefinitionId": "[concat(subscription().id, '/providers/Microsoft.Authorization/policyDefinitions/', variables('policyDefinitionForNamingResources'))]",
+                        "policyDefinitionReferenceId": "Automation_Accounts_Naming",
+                        "parameters": {
+                            "resourceType": {
+                                "value": "Microsoft.Automation/automationAccounts"
+                            },
+                            "resourceAbbreviation": {
+                                "value": "[[parameters('automationAccountAbbreviation')]"
+                            }
+                        }
+                    }*/
+                    {
+                            "policyDefinitionReferenceId": "許可されている仮想マシン サイズ SKU_1",
+                            "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/cccc23c7-8427-4f53-ad12-b6a63eb452b3",
+                            "definitionVersion": "1.*.*",
+                            "parameters": {
+                            "listOfAllowedSKUs": {
+                                "value": "[variables('VM_SKU_Size')]"
+                                
+                            }
+                            },
+                            "groupNames": []
+                    }
+                    /*{
+                    "policyDefinitionReferenceId": "仮想マシンで管理ポートを閉じる必要がある_1",
+                    "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/22730e10-96f6-4aac-ad84-9383d35b5917",
+                    "definitionVersion": "3.*.*",
+                    "parameters": {},
+                    "groupNames": []
+                    }*/
+                ]
+            }
+        }
+    ]
+}

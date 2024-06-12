@@ -2,12 +2,12 @@
     "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "variables": {
-        "policySetName": "policytest",
-        "policySetDisplayName": "policytest",
-        "policySetDescription": "This policy is sample.",
+        "policySetName": "SKUサイズ指定のテストポリシー",
+        "policySetDisplayName": "SKUサイズ指定のテストポリシー",
+        "policySetDescription": "このポリシーはサンプルです",
         //"policyDefinitionForNamingResources": "enforce-naming-for-resource-pd",
         //"policyDefinitionForResourceGroups": "enforce-naming-for-resource-groups-pd"
-        "VM_SKU_Size":  ["basic_a0","basic_a1","basic_a2"]
+        "VM_SKU_Size":  ["basic_a0","basic_a1","basic_a2"] //この行でSKUサイズを指定する
     },
     "resources": [
         {

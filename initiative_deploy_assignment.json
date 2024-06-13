@@ -7,69 +7,59 @@
         "policySetDescription": "コロ助の説明ナリ",
         "AssignmentName": "コロ助のイニシアティブナリ",
 
-        
 
-        "VM_SKU_Size":  ["basic_a0","basic_a1","basic_a2"] //この行でSKUサイズを指定する
+
+        "VM_SKU_Size": [ "basic_a0", "basic_a1", "basic_a2" ] //この行でSKUサイズを指定する
     },
-        "resources": [
-        {
-                "type": "Microsoft.Authorization/policySetDefinitions",
-                "apiVersion": "2023-04-01",
-                "name": "[variables('policySetName')]",
-                "properties": {
+    "resources": [
+        {//この中でイニシアティブを定義する
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "apiVersion": "2023-04-01",
+            "name": "[variables('policySetName')]",
+            "properties": {
                 "displayName": "[variables('policySetDisplayName')]",
                 "description": "[variables('policySetDescription')]",
                 "policyType": "Custom",
                 "metadata": {
                     "category": "Naming convention"
                 },
-                
-                "policyDefinitions": [                    
+
+                "policyDefinitions": [
                     {
-                            "policyDefinitionReferenceId": "許可されている仮想マシン サイズ SKU_1",
-                            "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/cccc23c7-8427-4f53-ad12-b6a63eb452b3",
-                            "definitionVersion": "1.*.*",
-                            "parameters": {
+                        "policyDefinitionReferenceId": "許可されている仮想マシン サイズ SKU_1",
+                        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/cccc23c7-8427-4f53-ad12-b6a63eb452b3",
+                        "definitionVersion": "1.*.*",
+                        "parameters": {
                             "listOfAllowedSKUs": {
                                 "value": "[variables('VM_SKU_Size')]"
-                                
+
                             }
-                            },
-                            "groupNames": []
+                        },
+                        "groupNames": []
                     }
-                    
+
                 ]
-                            }
+            }
         },
-        
-        {
+
+        {//この中でイニシアティブの割り当てを定義する。
             "type": "Microsoft.Authorization/policyAssignments",
             "name": "[variables('AssignmentName')]",
             "apiVersion": "2019-09-01",
-            /*"identity": {
-                "type": "SystemAssigned"
-            },*/
-            //"location": "West Europe",
             "properties": {
-                //"scope": "[if(empty(parameters('resourceGroupName')), subscription().id, concat(subscription().id, '/resourceGroups/', parameters('resourceGroupName')))]",
-                //"enforcementMode": "[parameters('policyAssignmentMode')]",
                 "policyDefinitionId": "[concat(subscription().id, '/providers/Microsoft.Authorization/policySetDefinitions/', variables('policySetName'))]"
-                //"parameters": "[parameters('initiativeParameters')]",
-                /*"metadata": {
-                    "assignedBy": "[parameters('assignedBy')]"
-                }*/
             },
             "dependsOn": [
-        "[variables('policySetName')]"
-      ]
+                "[variables('policySetName')]"
+            ]
         }
-            
-        
-        
-        
-        
-        
+
+
+
+
+
+
     ]
 
-    
+
 }

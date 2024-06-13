@@ -20,7 +20,7 @@
                 "metadata": {
                     "category": "Naming convention"
                 },
-                
+
                 "policyDefinitions": [
                     {
                         "policyDefinitionId": "[concat(subscription().id, '/providers/Microsoft.Authorization/policyDefinitions/', variables('policyDefinitionForResourceGroups'))]",

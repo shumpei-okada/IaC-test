@@ -2,10 +2,10 @@
     "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "variables": {
-        "policySetName": "ポリシーセットの名前は一意",
-        "policySetDisplayName": "ポリシーセットの表示名は一意",
-        "policySetDescription": "ポリシーセットの説明は一意",
-        "AssignmentName": "テストイニシアティブは一意",
+        "policySetName": "コロ助のポリシーナリ",
+        "policySetDisplayName": "コロ助のポリシーなり",
+        "policySetDescription": "コロ助の説明ナリ",
+        "AssignmentName": "コロ助のイニシアティブナリ",
 
         
 
@@ -39,10 +39,8 @@
                     }
                     
                 ]
-            }
+                            }
         },
-        
-        
         
         {
             "type": "Microsoft.Authorization/policyAssignments",
@@ -60,8 +58,17 @@
                 /*"metadata": {
                     "assignedBy": "[parameters('assignedBy')]"
                 }*/
-            }
+            },
+            "dependsOn": [
+        "[variables('policySetName')]"
+      ]
         }
+            
+        
+        
+        
+        
+        
     ]
 
     

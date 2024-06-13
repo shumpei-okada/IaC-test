@@ -3,7 +3,7 @@
         "message": "Default message"
     },
     {
-        "message": "Message for just this policy definition by reference ID",
+        "message": "Message for just this policy definition by reference ID",//非準拠メッセージ
         "policyDefinitionReferenceId": "10420126870854049575"//イニシアティブの中でだけポリシーを一意に定義するID(特にグローバルではない)
     }
 ]

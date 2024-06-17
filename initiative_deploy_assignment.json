@@ -2,17 +2,17 @@
     "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "variables": {
-        "policySetName": "コロ助のポリシーナリ",
-        "policySetDisplayName": "コロ助のポリシーなり",
-        "policySetDescription": "コロ助の説明ナリ",
-        "AssignmentName": "コロ助のイニシアティブナリ",
+        "policySetName": "非準拠メッセージのテストポリシー",
+        "policySetDisplayName": "非準拠メッセージのテスト",
+        "policySetDescription": "非準拠ポリシーの説明",
+        "AssignmentName": "非準拠メッセージのテストイニシアティブ",
 
 
 
         "VM_SKU_Size": [ "basic_a0", "basic_a1", "basic_a2" ] //この行でSKUサイズを指定する
     },
     "resources": [
-        {//この中でイニシアティブを定義する
+        {//この中でイニシアティブを定義する------------------------------------------------------------------------------------------------
             "type": "Microsoft.Authorization/policySetDefinitions",
             "apiVersion": "2023-04-01",
             "name": "[variables('policySetName')]",
@@ -24,7 +24,7 @@
                     "category": "Naming convention"
                 },
 
-                "policyDefinitions": [
+                "policyDefinitions": [//この中で個別のポリシーを定義する-------------------------------------------------------------------
                     {
                         "policyDefinitionReferenceId": "許可されている仮想マシン サイズ SKU_1",
                         "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/cccc23c7-8427-4f53-ad12-b6a63eb452b3",
@@ -38,21 +38,31 @@
                         "groupNames": []
                     }
 
-                ]
+                ]//個別のポリシー定義ここまで--------------------------------------------------------------------------------------------
             }
-        },
+        },//イニシアティブ定義ここまで-------------------------------------------------------------------------------------------------------
 
-        {//この中でイニシアティブの割り当てを定義する。
+
+
+        {//この中でイニシアティブの割り当てを定義する------------------------------------------------------------------------------------------
             "type": "Microsoft.Authorization/policyAssignments",
             "name": "[variables('AssignmentName')]",
-            "apiVersion": "2019-09-01",
+            "apiVersion": "2024-04-01",
             "properties": {
-                "policyDefinitionId": "[concat(subscription().id, '/providers/Microsoft.Authorization/policySetDefinitions/', variables('policySetName'))]"
+                "policyDefinitionId": "[concat(subscription().id, '/providers/Microsoft.Authorization/policySetDefinitions/', variables('policySetName'))]",
+                
+                "nonComplianceMessages": [//この中で非準拠メッセージを定義する、リファレンスIDで個別のポリシーと紐づける--------------------------
+                    
+                    {
+                        "message": "ポリシーにより許可されていません。非準拠メッセージのテストです",
+                        "policyDefinitionReferenceId": "許可されている仮想マシン サイズ SKU_1"
+                    }
+                ]//非準拠メッセージ定義ここまで------------------------------------------------------------------------------------------------
             },
             "dependsOn": [
                 "[variables('policySetName')]"
             ]
-        }
+        }//イニシアティブの割り当ての定義ここまで-----------------------------------------------------------------------------------------------
 
 
 

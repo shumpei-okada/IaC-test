@@ -1,0 +1,352 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "variables": {//この中でパラメータを指定する-------------------------------------------------------------------------------------------
+        "policySetName": "デフォルトポリシー",//割り当てとの紐づけに使用する値。
+        "policySetDisplayName": "イニシアティブ定義(Azure構築基本セット)",//定義タブに表示されるイニシアティブの名称
+        "policySetDescription": "Azure構築基本セットに付属するイニシアティブ定義です。",//イニシアティブの説明
+        "AssignmentName": "イニシアティブ割り当て(Azure構築基本セット)",//割り当てタブに表示される割り当ての名称
+        
+        "VM_SKU_Size": [ //このセクションでSKUサイズを指定する
+            "basic_a0",
+            "basic_a1",
+            "basic_a2"
+        ],
+        "Locations": [ //このセクションでRGが許可される場所を指定する
+            "japaneast",
+            "japanwest"
+        ],
+        "listOfResourceTypes": [ //このセクションで削除を許可しないリソースの種類を指定する
+            "Microsoft.Compute/disks",
+            "Microsoft.Compute/restorePointCollections",
+            "Microsoft.Compute/virtualMachines",
+            "Microsoft.Compute/virtualMachines/extensions",
+            "microsoft.insights/actiongroups",
+            "microsoft.insights/activityLogAlerts",
+            "microsoft.insights/metricalerts",
+            "Microsoft.Network/expressRouteCircuits",
+            "Microsoft.Network/networkInterfaces",
+            "Microsoft.Network/networkSecurityGroups",
+            "Microsoft.Network/networkWatchers",
+            "Microsoft.Network/publicIPAddresses",
+            "Microsoft.Network/virtualNetworkGateways",
+            "Microsoft.Network/virtualNetworks",
+            "Microsoft.RecoveryServices/vaults",
+            "Microsoft.SqlVirtualMachine/SqlVirtualMachines",
+            "Microsoft.Storage/storageAccounts"
+        ],
+        "listOfAllowedSKUsforStorage": [//このセクションで構築するストレージアカウントの冗長性を指定する
+        
+            "Premium_LRS",
+            "Premium_ZRS",
+            "Standard_GRS"
+
+        ],
+        "approvedNetworkId": "sample_id"//承認されたネットワークのIDを指定する
+    
+    
+    
+    
+    },//パラメータ指定ここまで-------------------------------------------------------------------------------------------------------------
+
+    
+    
+    
+    
+    "resources": [
+        { //この中でイニシアティブを定義する------------------------------------------------------------------------------------------------
+            "type": "Microsoft.Authorization/policySetDefinitions",
+            "apiVersion": "2023-04-01",
+            "name": "[variables('policySetName')]",
+            "properties": {
+                "displayName": "[variables('policySetDisplayName')]",
+                "description": "[variables('policySetDescription')]",
+                "policyType": "Custom",
+                "metadata": {
+                    "category": "Naming convention"
+                },
+                
+                
+                "policyDefinitions": [ //この中で個別のポリシーを定義する-------------------------------------------------------------------
+                    {
+                        "policyDefinitionReferenceId": "許可されている仮想マシンサイズSKU",
+                        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/cccc23c7-8427-4f53-ad12-b6a63eb452b3",
+                        "definitionVersion": "1.*.*",
+                        "parameters": {
+                            "listOfAllowedSKUs": {
+                                "value": "[variables('VM_SKU_Size')]"
+                            }
+                        },
+                        "groupNames": []
+                    },
+                    {
+                        "policyDefinitionReferenceId": "リソースグループが許可される場所",
+                        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/e56962a6-4747-49cd-b67b-bf8b01975c4c",
+                        "definitionVersion": "1.*.*",
+                        "parameters": {
+                            "listOfAllowedLocations": {
+                                "value": "[variables('Locations')]"
+                            }
+                        },
+                        "groupNames": []
+                    },
+                    {
+                        "policyDefinitionReferenceId": "リソースの種類の削除を許可しない",
+                        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/78460a36-508a-49a4-b2b2-2f5ec564f4bb",
+                        "definitionVersion": "1.*.*",
+                        "parameters": {
+                            "listOfResourceTypesDisallowedForDeletion": {
+                                "value": "[variables('listOfResourceTypes')]"
+                            }
+                        },
+                        "groupNames": []
+                    },
+                    {
+                        "policyDefinitionReferenceId": "ストレージアカウントを許可されているSKUで制限する必要がある",
+                        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/7433c107-6db4-4ad1-b57a-a76dce0154a1",
+                        "definitionVersion": "1.*.*",
+                        "parameters": {
+                            "listOfAllowedSKUs": {
+                                "value": "[variables('listOfAllowedSKUsforStorage')]"
+                            }
+                        },
+                        "groupNames": []
+                    },
+                    {
+                        "policyDefinitionReferenceId": "仮想マシンに対して Azure Backup を有効にする必要がある_1",
+                        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/013e242c-8828-4970-87b3-ab247555486d",
+                        "definitionVersion": "3.*.*",
+                        "parameters": {},
+                        "groupNames": []
+                    },
+                    {
+                        "policyDefinitionReferenceId": "Managed Disks を使用していない VM の監査_1",
+                        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d",
+                        "definitionVersion": "1.*.*",
+                        "parameters": {},
+                        "groupNames": []
+                    },
+                    {
+                        "policyDefinitionReferenceId": "Windows Server 用の既定の Microsoft IaaSAntimalware 拡張機能のデプロイ_1",
+                        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/2835b622-407b-4114-9198-6f7064cbe0dc",
+                        "definitionVersion": "1.*.*",
+                        "parameters": {},
+                        "groupNames": []
+                    },
+                    {
+                        "policyDefinitionReferenceId": "Azure 向け Microsoft Antimalware は保護定義を自動的に更新するように構成する必要がある_1",
+                        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/c43e4a30-77cb-48ab-a4dd-93f175c63b57",
+                        "definitionVersion": "1.*.*",
+                        "parameters": {},
+                        "groupNames": []
+                    },
+                    {
+                        "policyDefinitionReferenceId": "Microsoft IaaSAntimalware 拡張機能は Windows Server に展開する必要がある_1",
+                        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/9b597639-28e4-48eb-b506-56b05d366257",
+                        "definitionVersion": "1.*.*",
+                        "parameters": {},
+                        "groupNames": []
+                    },
+                    {
+                        "policyDefinitionReferenceId": "仮想マシンおよび仮想マシン スケール セットでは、ホストでの暗号化が有効になっている必要がある_1",
+                        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/fc4d8e41-e223-45ea-9bf5-eada37891d87",
+                        "definitionVersion": "1.*.*",
+                        "parameters": {},
+                        "groupNames": []
+                    },
+                    {
+                        "policyDefinitionReferenceId": "リソースの場所がリソース グループの場所と一致することの監査_1",
+                        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/0a914e76-4921-4c19-b460-a2d36003525a",
+                        "definitionVersion": "2.*.*",
+                        "parameters": {},
+                        "groupNames": []
+                    },
+                    {
+                        "policyDefinitionReferenceId": "レガシ Log Analytics 拡張機能を仮想マシンにインストールしてはならない_1",
+                        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/d2185817-5b7e-473c-aadd-9de6ac114280",
+                        "definitionVersion": "1.*.*",
+                        "parameters": {},
+                        "groupNames": []
+                    },
+                    {
+                        "policyDefinitionReferenceId": "アダプティブ ネットワーク強化の推奨事項をインターネット接続仮想マシンに適用する必要がある_1",
+                        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/08e6af2d-db70-460a-bfe9-d5bd474ba9d6",
+                        "definitionVersion": "3.*.*",
+                        "parameters": {},
+                        "groupNames": []
+                    },
+                    {
+                        "policyDefinitionReferenceId": "ご使用の仮想マシンに関連付けられたネットワーク セキュリティ グループでは、すべてのネットワーク ポートを制限する必要があります_1",
+                        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/9daedab3-fb2d-461e-b861-71790eead4f6",
+                        "definitionVersion": "3.*.*",
+                        "parameters": {},
+                        "groupNames": []
+                    },
+                    {
+                        "policyDefinitionReferenceId": "インターネットに接続されている仮想マシンをネットワーク セキュリティ グループで保護する必要がある_1",
+                        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/f6de0be7-9a8a-4b8a-b349-43cf02d22f7c",
+                        "definitionVersion": "3.*.*",
+                        "parameters": {},
+                        "groupNames": []
+                    },
+                    {
+                        "policyDefinitionReferenceId": "仮想マシンで管理ポートを閉じる必要がある_1",
+                        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/22730e10-96f6-4aac-ad84-9383d35b5917",
+                        "definitionVersion": "3.*.*",
+                        "parameters": {},
+                        "groupNames": []
+                    },
+                    {
+                        "policyDefinitionReferenceId": "インターネットに接続されていない仮想マシンをネットワーク セキュリティ グループで保護する必要がある_1",
+                        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/bb91dfba-c30d-4263-9add-9c2384e659a6",
+                        "definitionVersion": "3.*.*",
+                        "parameters": {},
+                        "groupNames": []
+                    },
+                    {
+                        "policyDefinitionReferenceId": "サブネットはネットワーク セキュリティ グループに関連付けられている必要がある_1",
+                        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/e71308d3-144b-4262-b144-efdc3cc90517",
+                        "definitionVersion": "3.*.*",
+                        "parameters": {},
+                        "groupNames": []
+                    },
+                    {
+                        "policyDefinitionReferenceId": "仮想マシンは、承認された仮想ネットワークに接続する必要がある_1",
+                        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/d416745a-506c-48b6-8ab1-83cb814bcaa3",
+                        "definitionVersion": "1.*.*",
+                        "parameters": {
+                            "virtualNetworkId": {
+                                "value": "[variables('approvedNetworkId')]"
+                            }
+                        },
+                        "groupNames": []
+                    },
+                    {
+                        "policyDefinitionReferenceId": "Azure Defender for servers を有効に構成する_1",
+                        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/8e86a5b6-b9bd-49d1-8e21-4bb8a0862222",
+                        "definitionVersion": "1.*.*",
+                        "parameters": {},
+                        "groupNames": []
+                    },
+                    {
+                        "policyDefinitionReferenceId": "Azure Defender を SQL サーバーで有効になるように構成する_1",
+                        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/36d49e87-48c4-4f2e-beed-ba4ed02b71f5",
+                        "definitionVersion": "2.*.*",
+                        "parameters": {},
+                        "groupNames": []
+                    },
+                    {
+                        "policyDefinitionReferenceId": "SQL Server の監査を有効にする必要があります_1",
+                        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/a6fb4358-5bf4-4ad7-ba82-2cd2f41ce5e9",
+                        "definitionVersion": "2.*.*",
+                        "parameters": {},
+                        "groupNames": []
+                    },
+                    {
+                        "policyDefinitionReferenceId": "SQL Server で脆弱性評価を有効にする必要がある_1",
+                        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/ef2a8f2a-b3d9-49cd-a8a8-9a3aaaf647d9",
+                        "definitionVersion": "3.*.*",
+                        "parameters": {},
+                        "groupNames": []
+                    },
+                    {
+                        "policyDefinitionReferenceId": "Azure VPN ゲートウェイで 'Basic' SKU を使用しないでください_1",
+                        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/e345b6c3-24bd-4c93-9bbb-7e5e49a17b78",
+                        "definitionVersion": "1.*.*",
+                        "parameters": {},
+                        "groupNames": []
+                    },
+                    {
+                        "policyDefinitionReferenceId": "ゲートウェイ サブネットをネットワーク セキュリティ グループで構成してはならない_1",
+                        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/35f9c03a-cc27-418e-9c0c-539ff999d010",
+                        "definitionVersion": "1.*.*",
+                        "parameters": {},
+                        "groupNames": []
+                    },
+                    {
+                        "policyDefinitionReferenceId": "ストレージ アカウントにはインフラストラクチャの暗号化が必要_1",
+                        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/4733ea7b-a883-42fe-8cac-97454c2a9e4a",
+                        "definitionVersion": "1.*.*",
+                        "parameters": {},
+                        "groupNames": []
+                    },
+                    {
+                        "policyDefinitionReferenceId": "ストレージ アカウントには、指定された TLS の最小バージョンが必要です_1",
+                        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/fe83a0eb-a853-422d-aac2-1bffd182c5d0",
+                        "definitionVersion": "1.*.*",
+                        "parameters": {},
+                        "groupNames": []
+                    },
+                    {
+                        "policyDefinitionReferenceId": "ストレージ アカウントではネットワーク アクセスを制限する必要があります_1",
+                        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/34c877ad-507e-4c82-993e-3452a6e0ad3c",
+                        "definitionVersion": "1.*.*",
+                        "parameters": {},
+                        "groupNames": []
+                    },
+                    {
+                        "policyDefinitionReferenceId": "ストレージアカウントは、仮想ネットワーク規則を使用してネットワーク アクセスを制限する必要がある_1",
+                        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/2a1a9cdf-e04d-429a-8416-3bfb72a1b26f",
+                        "definitionVersion": "1.*.*",
+                        "parameters": {},
+                        "groupNames": []
+                    },
+                    {
+                        "policyDefinitionReferenceId": "ストレージ アカウントのパブリック アクセスを不許可に構成する_1",
+                        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/13502221-8df0-4414-9937-de9c5c4e396b",
+                        "definitionVersion": "1.*.*",
+                        "parameters": {},
+                        "groupNames": []
+                    }
+               
+                ] //個別のポリシー定義ここまで--------------------------------------------------------------------------------------------
+            
+            
+            
+            }
+        }, //イニシアティブ定義ここまで-------------------------------------------------------------------------------------------------------
+        
+        
+        
+        
+        
+        { //この中でイニシアティブの割り当てを定義する------------------------------------------------------------------------------------------
+            "type": "Microsoft.Authorization/policyAssignments",
+            "name": "[variables('AssignmentName')]",
+            "apiVersion": "2024-04-01",
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "location": "japaneast",
+            "properties": {
+                "policyDefinitionId": "[concat(subscription().id, '/providers/Microsoft.Authorization/policySetDefinitions/', variables('policySetName'))]",
+                "nonComplianceMessages": [ //この中で非準拠メッセージを定義する、リファレンスIDで個別のポリシーと紐づける--------------------------
+                    {
+                        "message": "ポリシーにより許可されていません",
+                        "policyDefinitionReferenceId": "許可されている仮想マシンサイズSKU"
+                    },
+                    {
+                        "message": "ポリシーにより許可されていません",
+                        "policyDefinitionReferenceId": "リソースグループが許可される場所"
+                    },
+                    {
+                        "message": "ポリシーにより許可されていません",
+                        "policyDefinitionReferenceId": "リソースの種類の削除を許可しない"
+                    },
+                    {
+                        "message": "ポリシーにより許可されていません",
+                        "policyDefinitionReferenceId": "ストレージアカウントを許可されているSKUで制限する必要がある"
+                    }
+
+
+
+
+
+                ] //非準拠メッセージ定義ここまで------------------------------------------------------------------------------------------------
+            },
+            "dependsOn": [
+                "[variables('policySetName')]"
+            ]
+        } //イニシアティブの割り当ての定義ここまで-----------------------------------------------------------------------------------------------
+    ]
+}

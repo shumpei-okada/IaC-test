@@ -1,7 +1,7 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "variables": {
+    "variables": {//この中でパラメータを定義する-------------------------------------------------------------------------------------------
         "policySetName": "非準拠メッセージのテストポリシー",
         "policySetDisplayName": "非準拠メッセージのテスト",
         "policySetDescription": "非準拠ポリシーの説明",
@@ -10,7 +10,8 @@
 
 
         "VM_SKU_Size": [ "basic_a0", "basic_a1", "basic_a2" ] //この行でSKUサイズを指定する
-    },
+    },//パラメータ定義ここまで-------------------------------------------------------------------------------------------------------------
+
     "resources": [
         {//この中でイニシアティブを定義する------------------------------------------------------------------------------------------------
             "type": "Microsoft.Authorization/policySetDefinitions",

@@ -2,10 +2,10 @@
     "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "variables": { //この中でパラメータを指定する-------------------------------------------------------------------------------------------
-        "policySetName": "recommendation check initiative for Microsoft defender for Cloud", //割り当てとの紐づけに使用する値。
-        "policySetDisplayName": "MDfC推奨事項即時チェック用イニシアティブ定義", //定義タブに表示されるイニシアティブの名称
+        "policySetName": "recommendation_check_initiative_for_MDfC_20240625", //割り当てとの紐づけに使用する値。
+        "policySetDisplayName": "MDfC推奨事項即時チェック用イニシアティブ定義(2024年6月25日更新)", //定義タブに表示されるイニシアティブの名称
         "policySetDescription": "MDfCのGUIへの反映を待たずに、即時で推奨事項の修正を確認する用に作成。", //イニシアティブの説明
-        "AssignmentName": "MDfC推奨事項即時チェッカー(2024年6月24日更新)" //割り当てタブに表示される割り当ての名称
+        "AssignmentName": "MDfC推奨事項即時チェッカー(2024年6月25日更新)" //割り当てタブに表示される割り当ての名称
         
 
     }, //パラメータ指定ここまで-------------------------------------------------------------------------------------------------------------
@@ -83,7 +83,7 @@
                     {//システムの更新プログラムの適用
                         "policyDefinitionReferenceId": "システム更新プログラムがマシンにインストールされている必要がある (更新センターを利用)",
                         "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/f85bf3e0-d513-442e-89c3-1784ad63382b",
-                        "definitionVersion": "1.*.*",
+                        "definitionVersion": "1.*.*-preview",
                         "parameters": {},
                         "groupNames": []
                     },
@@ -136,14 +136,8 @@
                     },//アクセスとアクセス許可の管理
 
 
+                    
                     {//承認されてないネットワークアクセスを制限する
-                        "policyDefinitionReferenceId": "インターネットに接続されている仮想マシンをネットワーク セキュリティ グループで保護する必要がある",
-                        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/f6de0be7-9a8a-4b8a-b349-43cf02d22f7c",
-                        "definitionVersion": "3.*.*",
-                        "parameters": {},
-                        "groupNames": []
-                    },
-                    {
                         "policyDefinitionReferenceId": "ご使用の仮想マシンに関連付けられたネットワーク セキュリティ グループでは、すべてのネットワーク ポートを制限する必要があります",
                         "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/9daedab3-fb2d-461e-b861-71790eead4f6",
                         "definitionVersion": "3.*.*",
@@ -163,8 +157,32 @@
                         "definitionVersion": "3.*.*",
                         "parameters": {},
                         "groupNames": []
-                    }//承認されてないネットワークアクセスを制限する
+                    },//承認されてないネットワークアクセスを制限する
+
+                    //以下、適用除外に設定する推奨事項
+
+                    {//保存時の暗号化を有効にする
+                        "policyDefinitionReferenceId": "Windows 仮想マシンでは、Azure Disk Encryption か EncryptionAtHost を有効にする必要があります。",
+                        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/3dc5edcd-002d-444c-b216-e123bbfa37c0",
+                        "definitionVersion": "1.*.*",
+                        "parameters": {},
+                        "groupNames": []
+                    },
+                    {
+                        "policyDefinitionReferenceId": "仮想マシンおよび仮想マシン スケール セットでは、ホストでの暗号化が有効になっている必要がある",
+                        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/fc4d8e41-e223-45ea-9bf5-eada37891d87",
+                        "definitionVersion": "1.*.*",
+                        "parameters": {},
+                        "groupNames": []
+                    },//保存時の暗号化を有効にする
                     
+                    {//監査とログを有効にする
+                        "policyDefinitionReferenceId": "Logic Apps のリソース ログを有効にする必要がある",
+                        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/34f95f76-5386-4de7-b824-0d8478470c9d",
+                        "definitionVersion": "5.*.*",
+                        "parameters": {},
+                        "groupNames": []
+                    }//監査とログを有効にする
                     
                     
 
